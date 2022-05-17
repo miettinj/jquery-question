@@ -2,7 +2,7 @@ from django import forms
 from django.forms import fields, models, formsets, widgets
 from django.contrib.admin.widgets import AdminDateWidget
 from django.conf import settings
-from example.models import Product, Order, OrderedItem
+
 
 
 class SingleClsVariable(forms.Form):
