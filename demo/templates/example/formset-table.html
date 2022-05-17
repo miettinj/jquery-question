@@ -1,0 +1,507 @@
+
+<style>
+  .form-horizontal .control-label{
+  /* text-align:right; */
+  text-align:left;
+  
+}
+.panel-affix {
+	min-width: 225px;
+}
+tr.strikeout td:before {
+  content: " ";
+  position: absolute;
+  /*display: inline-block;*/
+  padding: 5px 10px;
+  left: 5;
+  border-bottom: 1px solid #111;
+  width: 100%;
+}
+.highlight {
+    background: #F7F7C5;
+  }
+
+  tr.empty td:not(:last-child) {
+      background: transparent url('http://davidrhysthomas.co.uk/linked/strike.png') 0 50% repeat-x;
+
+}
+#analyysi_table tbody:hover {
+    cursor: move;
+}
+#luok_table tbody:hover {
+    cursor: move;
+}
+  
+</style>
+
+<style type="text/css">
+    .add-row {
+        padding-left:18px;
+
+    }
+    .delete-row {
+        float:right;
+        display:block;
+        margin:5px 0 0 5px;
+        text-indent:-6000px;
+
+        width:16px;
+        height:16px;
+    }
+    .form-container .delete-row {
+        float:left;
+        display:block;
+        margin-left:4px;
+        padding-left:8px;
+        text-indent:-6000px;
+
+    }
+#helpper_for_vars .form-control{border:0; box-shadow:none}
+#helpper_for_vars .form-control:focus{box-shadow:none;}
+
+#helpper_for_vars label{color:#999;  padding-top: 5px; display:block; left:0; width:100%}
+
+#helpper_for_vars .panel{border-width:2px; border-radius:7px }
+
+#helpper_for_vars .table-bordered > thead > tr > th,
+#helpper_for_vars .table-bordered > tbody > tr > th,
+#helpper_for_vars .table-bordered > tfoot > tr > th,
+#helpper_for_vars .table-bordered > thead > tr > td,
+#helpper_for_vars .table-bordered > tbody > tr > td,
+#helpper_for_vars .table-bordered > tfoot > tr > td{border:2px solid #eee; vertical-align: middle;}
+#helpper_for_vars .table-bordered{border-radius:7px}
+
+#helpper_for_vars .form-control::-moz-placeholder {
+color: #999;
+opacity: 1
+}
+#helpper_for_vars .form-control:-ms-input-placeholder {
+color: #999
+}
+#helpper_for_vars .form-control::-webkit-input-placeholder {
+color: #999
+}
+#helpper_for_vars .panel-body {
+  padding: 5px;
+
+}
+.the-table {
+  
+    word-wrap: break-word;
+}
+</style>
+<script src="https://code.jquery.com/jquery-2.2.4.js"></script> 
+<script src="https://tkdpxprostg001.blob.core.windows.net/static/js/jquery-ui.js"></script>  
+<script src="https://tkdpxprostg001.blob.core.windows.net/static/site/js/jquery.formset12.js"></script>
+<script type="text/javascript">
+
+	
+function checkTrueFoo(tech_name){
+	var i;
+	for (i = 0; i < $('#luok_table tbody tr').length -1; i++) {		
+		if ($('#id_fs_luok-'+ i +'-technical_name')[0].value == tech_name) {
+		return ("fs_luok-");
+		}
+	}
+	for (i = 0; i < $('#analyysi_table tbody tr').length -1; i++) {		
+		if ($('#id_fs_num-'+ i +'-technical_name')[0].value == tech_name) {
+		return ("fs_num-");
+		}
+	}
+}	
+
+function variable_fields($true_foo, n, row_needed){
+		$("#foo_var_name_fi").val($("input[name*='"+ $true_foo + n +"-var_name_fi']").val());
+		$("#foo_var_name_sv").val($("input[name*='"+ $true_foo + n +"-var_name_sv']").val());
+		$("#foo_var_name_en").val($("input[name*='"+ $true_foo + n +"-var_name_en']").val());
+       
+		$("#foo_var_desc_fi").val($("input[name*='"+ $true_foo + n +"-var_desc_fi']").val());
+		$("#foo_var_desc_sv").val($("input[name*='"+ $true_foo + n +"-var_desc_sv']").val());
+		$("#foo_var_desc_en").val($("input[name*='"+ $true_foo + n +"-var_desc_en']").val());
+      	//console.log("variable_fields, next definig on_keyup_change, $true_foo: " + $true_foo)
+	   $("#foo_var_name_fi").off("keyup change")
+       $("#foo_var_name_fi").on("keyup change", function() {
+	      $true_foo = checkTrueFoo($("#foo_var_techname").val())
+	      //console.log("on keyup change, $true_foo: " + $true_foo + " true_n: " +  $true_n + " " + this.value + " " + $("#foo_var_name_fi"))
+          $("input:hidden[name*='"+ $true_foo + $true_n +"-var_name_fi']").val(this.value);
+       });
+	   $("#foo_var_name_sv").off("keyup change")
+       $("#foo_var_name_sv").on("keyup change", function() {
+	      $true_foo = checkTrueFoo($("#foo_var_techname").val())
+		  //console.log("on keyup change, $true_foo: " + $true_foo + " true_n: " +  $true_n + " " + this.value + " " + $("#foo_var_name_sv"))
+          $("input:hidden[name*='"+ $true_foo + $true_n +"-var_name_sv']").val(this.value);
+       });
+	   $("#foo_var_name_en").off("keyup change")
+       $("#foo_var_name_en").on("keyup change", function() {
+	      $true_foo = checkTrueFoo($("#foo_var_techname").val())
+          $("input:hidden[name*='"+ $true_foo + $true_n +"-var_name_en']").val(this.value);
+       });
+	   $("#foo_var_desc_fi").off("keyup change")
+       $("#foo_var_desc_fi").on("keyup change", function() {
+	      $true_foo = checkTrueFoo($("#foo_var_techname").val())
+          $("input:hidden[name*='"+ $true_foo + $true_n +"-var_desc_fi']").val(this.value);
+       });
+	   $("#foo_var_desc_sv").off("keyup change")
+       $("#foo_var_desc_sv").on("keyup change", function() {
+	      $true_foo = checkTrueFoo($("#foo_var_techname").val())
+          $("input:hidden[name*='"+ $true_foo + $true_n +"-var_desc_sv']").val(this.value);
+       });
+	   $("#foo_var_desc_en").off("keyup change")
+       $("#foo_var_desc_en").on("keyup change", function() {
+	      $true_foo = checkTrueFoo($("#foo_var_techname").val())
+          $("input:hidden[name*='"+ $true_foo + $true_n +"-var_desc_en']").val(this.value);
+       });
+
+        //console.log("variable_fields, defined on_keyup_change, $true_foo: " + $true_foo)
+        var urli = window.location.href ;
+        var list_url = urli.split('/');
+        var rdf_id_from_url =  list_url[list_url.length - 2];
+        var stat_id_from_url =  list_url[list_url.length - 3];
+}
+
+
+   $(document).ready(function(){        
+        var urli = window.location.href ;
+        var list_url = urli.split('/');
+        var rdf_id_from_url =  list_url[list_url.length - 2];
+        var stat_id_from_url =  list_url[list_url.length - 3];
+		
+        $('#luok_table tbody').sortable({
+          
+          update: function( event, ui ){
+              $(this).find('tr').each(function(i){
+                  $(this).attr("id", $(this).attr("id").replace(/\d+/, i) );                
+                  $(this).find(':input').each(function(){
+                      $(this).attr("id", $(this).attr("id").replace(/\d+/, i) );
+                      $(this).attr("name", $(this).attr("name").replace(/\d+/, i) );
+                  }); 
+              });
+          }
+      });
+        
+        $('#analyysi_table tbody').sortable({
+          
+          update: function( event, ui ){
+              $(this).find('tr').each(function(i){
+                  $(this).find(':input').each(function(){
+                      $(this).attr("id", $(this).attr("id").replace(/\d+/, i) );
+                      $(this).attr("name", $(this).attr("name").replace(/\d+/, i) );
+                  }); 
+              });
+          }
+        }); 
+        
+        $('#luok_table tbody tr').formset({
+            addText: 'Lisää ryhmittelevä muuttuja',
+            deleteText: 'Poista',
+			prefix: 'fs_luok',
+            formCssClass: 'dynamic-formset1',
+        });
+        $('#analyysi_table tbody tr').formset({
+            addText: 'Lisää analyysimuuttuja',
+            deleteText: 'Poista',
+			prefix: 'fs_num',
+            formCssClass: 'dynamic-formset2',
+        });
+    });
+   
+</script>
+
+<script type="text/javascript">
+$(document).on("click",'.data_row',function(){   
+        var row_needed = $(this);
+        $("#foo_var_techname").val($(this).closest('tr').find("input").val());
+        var index = $('tr', $(this).closest("table")).index(this)-1;
+        var n = index.toString();
+        $true_n = n;
+        
+        var foo = $(this).closest('table').attr('id');
+        if (foo == 'luok_table') {
+            $true_foo = 'fs_luok-';
+        } else {
+            $true_foo = 'fs_num-';
+        }
+		//console.log("on click .data_row, calling variable_fields with $true_foo " + $true_foo)
+  	    variable_fields($true_foo, n, row_needed)    
+});
+
+
+$(document).on("change",'.tn',function(){   
+		var row_needed = $(this);
+        $("#foo_var_techname").val($(this).closest('tr').find("input").val());
+	    var tn = this.id
+		var tn_val = this.value
+		var n = tn.split('-')[1]        
+        var foo = tn.split('-')[0]
+        if (foo == 'fs_luok' || foo == 'id_fs_luok') {
+            $true_foo = 'fs_luok-';
+        } else {
+            $true_foo = 'fs_num-';
+        }       
+
+        var urli = window.location.href ;
+        var list_url = urli.split('/');
+        var rdf_id_from_url =  list_url[list_url.length - 2];
+        var stat_id_from_url =  list_url[list_url.length - 3];
+
+		$("input[name*='"+ $true_foo + n +"-var_name_fi']").val("su_nimi")
+		$("input[name*='"+ $true_foo + n +"-var_name_sv']").val("ru_nimi")
+		$("input[name*='"+ $true_foo + n +"-var_name_en']").val("en_nimi")
+		
+		$("input[name*='"+ $true_foo + n +"-var_desc_fi']").val("su_desc")
+		$("input[name*='"+ $true_foo + n +"-var_desc_sv']").val("ru_desc")
+		$("input[name*='"+ $true_foo + n +"-var_desc_en']").val("en_desc")
+					
+		$("#foo_var_name_fi").val($("input[name*='"+ $true_foo + n +"-var_name_fi']").val());
+		$("#foo_var_name_sv").val($("input[name*='"+ $true_foo + n +"-var_name_sv']").val());
+		$("#foo_var_name_en").val($("input[name*='"+ $true_foo + n +"-var_name_en']").val());
+       
+		$("#foo_var_desc_fi").val($("input[name*='"+ $true_foo + n +"-var_desc_fi']").val());
+		$("#foo_var_desc_sv").val($("input[name*='"+ $true_foo + n +"-var_desc_sv']").val());
+		$("#foo_var_desc_en").val($("input[name*='"+ $true_foo + n +"-var_desc_en']").val());
+		console.log("on change .tn, calling variable_fields with $true_foo " + $true_foo)
+		variable_fields($true_foo, n, row_needed) 
+});
+
+$(document).ready(function(){
+	var i;
+	
+   	for (i = 0; i < $('#luok_table tbody tr').length -1; i++) {
+		if ($('#id_fs_luok-'+i+'-technical_name').val() == 'timeperiod'){
+			$('#luok_table tbody tr')[i].cells[5].style.display = "none";
+			$('#id_fs_luok-'+i+'-var_type').append($('<option>', {value: 'Time', text: 'Aika'}));
+			$('#id_fs_luok-'+i+'-var_type').children('option[value="Region"]').remove();
+			$('#id_fs_luok-'+i+'-var_type').children('option[value="Other"]').remove();
+			$('#id_fs_luok-'+i+'-var_type').children('option[value="Classificatory"]').remove();			
+		}
+	}	
+      
+   $("#luok_table > tbody  > tr").each(function (index) {
+        var title_fi = $('#id_fs_luok-'+index+'-var_name_fi').val();
+        var title_sv = $('#id_fs_luok-'+index+'-var_name_sv').val();
+        var title_en = $('#id_fs_luok-'+index+'-var_name_en').val();
+
+        
+        if (title_fi) {
+          $(this).find('.fi').html('<b>fi</b>');
+        }
+        if (title_sv) {
+          $(this).find('.sv').html('<b>sv</b>');
+        }
+        if (title_en) {
+          $(this).find('.en').html('<b>en</b>');
+        }
+    });
+
+      $("#analyysi_table > tbody  > tr").each(function (index) {
+        var title_fi = $('#id_fs_num-'+index+'-var_name_fi').val();
+        var title_sv = $('#id_fs_num-'+index+'-var_name_sv').val();
+        var title_en = $('#id_fs_num-'+index+'-var_name_en').val();
+
+        if (title_fi) {
+          $(this).find('.fi').html('<b>fi</b>');
+        }
+        if (title_sv) {
+          $(this).find('.sv').html('<b>sv</b>');
+        }
+        if (title_en) {
+          $(this).find('.en').html('<b>en</b>');
+        }
+    });
+  
+  $('#analyysi_table tbody select').attr("style", "pointer-events: none; color: #ccc;");
+
+  
+  $('#direction_num_vars').on('change', function() {
+    $('.nums_direction').val($('#direction_num_vars').val());
+  });
+  
+  
+  $('#luok_table tbody select').on('change', function() {
+    if($(this).val() === "rivi")
+         $(this).closest('td').next('td').find('select').val('row');
+    
+    if($(this).val() === "sarake")
+         $(this).closest('td').next('td').find('select').val('col');
+  });
+
+  $(".OnOff").click(function() {
+    $(this).parent().parent().toggleClass( "empty" );
+  });
+  
+});
+
+
+</script>
+
+<script type="text/javascript">
+
+   $(document).on('click', '.kasitemuuttuja', function(){
+        var $row = $(this).closest("tr");    // Find the row
+        var $db = $row.find(".db_pxweb").val(); // Find the text
+        var $pxweb = $row.find(".pxweb").val(); // Find the text
+      });
+    
+</script>
+
+  <div class="row">
+    <form class="form-horizontal" autocomplete="off" id="muuttujavalinnat" name="muuttujavalinnat" action="." method="post">
+        {% csrf_token %}
+    <div class="col-sm-9">
+      <h3>
+        Ryhmittelevät muuttujat
+        <span
+            class="glyphicon glyphicon-info-sign myTooltip" 
+            title=":ajax[/api/tag_content_hasid/?hasid=m_ryhmittelevat, content]:"
+        </span>
+      </h3>
+      <table class="table table-hover table-bordered" id="luok_table">
+        <thead>
+          <tr class="info">
+            <th>
+              Tekninen nimi
+              <span
+                class="glyphicon glyphicon-info-sign myTooltip" 
+                title=":ajax[/api/tag_content_hasid/?hasid=m_tekninennimi, content]:"
+              </span>
+            </th>            
+          </tr>
+        </thead>
+        <tbody>
+           {{ singelclsvars_fs.management_form }}
+          {% for form in singelclsvars_fs.forms %}
+              
+          <tr  id="{{ form.prefix }}-row" class="data_row">
+            
+            <td>{{ form.technical_name }}</td>
+              {% for hidden_field in form.hidden_fields %}
+                {{ hidden_field }}
+              {% endfor %}
+          </tr>
+		  
+          {% endfor %}
+          
+        </tbody>
+        
+      </table>
+     
+      <h3>
+        Analyysimuuttujat
+        <span
+            class="glyphicon glyphicon-info-sign myTooltip" 
+            title=":ajax[/api/tag_content_hasid/?hasid=m_analyysimuuttujat, content]:"
+        </span>
+      </h3>
+
+      <table class="table table-hover table-bordered" id="analyysi_table">
+        <thead>
+          <tr class="info">
+            <th>
+              Tekninen nimi
+              <span
+                class="glyphicon glyphicon-info-sign myTooltip" 
+                title=":ajax[/api/tag_content_hasid/?hasid=m_tekninennimi, content]:"
+              </span>
+            </th>
+
+          </tr>
+        </thead>
+        <tbody>
+          {% for form in singelnumvars_fs.forms %}
+         
+          <tr class="data_row">
+            <td>{{ form.technical_name }}</td>
+            {% for hidden_field in form.hidden_fields %}
+                {{ hidden_field }}
+              {% endfor %}            
+          </tr>
+               
+          {% endfor %}
+
+        </tbody>
+        
+      </table>
+      {{ singelnumvars_fs.management_form }}
+
+    </div>
+    
+
+    <div class="form-horizontal " id="helpper_for_vars" name="helpper_for_vars" >
+      <div class="col-sm-3">
+        <h3>&#8203;</h3>
+        <div class="panel panel-primary panel-affix1" id="sidebar">  
+          <div class="panel-heading">
+            <h4 class="panel-title">Valittu muuttuja:</h4>
+          </div>
+          <div class="panel-body">
+               <table class="table">
+        
+                  <tr >
+                      <td >
+                           <b>Tekninen nimi</b>
+						   <br>
+						   <br>
+                           <span
+                                class="alert_vars glyphicon glyphicon-info-sign pull-right" 
+                                tabindex="0" 
+                                data-toggle="popover"
+                                data-placement="top"
+                                
+                                title="HUOM!!!"
+                                data-content=''
+                              </span>
+							<br>  
+                      </td>
+                  </tr>
+                  <tr>
+                      <td >
+                           <input id="foo_var_techname" class="form-control" placeholder="tekninen nimi..." readonly>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td >
+                          <b> Muuttujan nimi</b>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td style="word-break:break-all;">
+                           <input id="foo_var_name_fi" class="form-control" placeholder="suomeksi">
+                      </td>
+                  </tr>
+                  <tr>
+                      <td >
+                           <input id="foo_var_name_sv" class="form-control" placeholder="ruotsiksi">
+                      </td>
+                  </tr>
+                  <tr>
+                      <td >
+                           <input id="foo_var_name_en" class="form-control" placeholder="englanniksi">
+                      </td>
+                  </tr>
+                  <tr>
+                      <td >
+                          <b> Muuttujan kuvaus</b>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td >
+                           <textarea id="foo_var_desc_fi" class="form-control" rows="3" placeholder="suomeksi"></textarea>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td >
+                           <textarea id="foo_var_desc_sv" class="form-control" rows="3" placeholder="ruotsiksi"></textarea>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td >
+                           <textarea id="foo_var_desc_en" class="form-control" rows="3" placeholder="englanniksi"></textarea>
+                      </td>
+                  </tr>
+              
+              </table>
+          </div>
+        </div>
+      </div>
+    </div>
+   
