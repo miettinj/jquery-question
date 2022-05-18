@@ -95,6 +95,11 @@ color: #999
 <script src="https://tkdpxprostg001.blob.core.windows.net/static/site/js/jquery.formset12.js"></script>
 <script type="text/javascript">
 
+function fix_tn(){
+	for (i = 0; i < $('#luok_table tbody tr').length -1; i++) {
+		console.log($('#luok_table tbody tr')[i].cells[0])
+	}
+}
 	
 function checkTrueFoo(tech_name){
 	var i;
@@ -196,6 +201,7 @@ function variable_fields($true_foo, n, row_needed){
             deleteText: 'Poista',
 			prefix: 'fs_luok',
             formCssClass: 'dynamic-formset1',
+			added: fix_tn
         });
         $('#analyysi_table tbody tr').formset({
             addText: 'Lisää analyysimuuttuja',
@@ -264,18 +270,7 @@ $(document).on("change",'.tn',function(){
 });
 
 $(document).ready(function(){
-	var i;
-	
-   	for (i = 0; i < $('#luok_table tbody tr').length -1; i++) {
-		if ($('#id_fs_luok-'+i+'-technical_name').val() == 'timeperiod'){
-			$('#luok_table tbody tr')[i].cells[5].style.display = "none";
-			$('#id_fs_luok-'+i+'-var_type').append($('<option>', {value: 'Time', text: 'Aika'}));
-			$('#id_fs_luok-'+i+'-var_type').children('option[value="Region"]').remove();
-			$('#id_fs_luok-'+i+'-var_type').children('option[value="Other"]').remove();
-			$('#id_fs_luok-'+i+'-var_type').children('option[value="Classificatory"]').remove();			
-		}
-	}	
-      
+	      
    $("#luok_table > tbody  > tr").each(function (index) {
         var title_fi = $('#id_fs_luok-'+index+'-var_name_fi').val();
         var title_sv = $('#id_fs_luok-'+index+'-var_name_sv').val();
